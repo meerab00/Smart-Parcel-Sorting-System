@@ -13,5 +13,50 @@
 <div class="intro"><div class="eyebrow">Abstract algebra · Real-life application</div><h1>Finite Abelian Group</h1><p>A 12-hour clock is a practical example of a finite Abelian group under addition modulo 12.</p></div>
 <div class="grid"><section class="panel"><h2>Mathematical model</h2><p class="hint">Represent the clock hours using the set Z₁₂.</p><div class="math"><p><b>Set:</b> Z₁₂ = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11}</p><p><b>Operation:</b> Addition modulo 12.</p><p><b>Clock meaning:</b> 0 represents 12 o'clock; 1 represents 1 o'clock, and so on.</p></div><div class="facts" style="margin-top:12px"><div class="fact"><b>Closure</b><span>Adding two values mod 12 gives a value in Z₁₂.</span></div><div class="fact"><b>Associativity</b><span>(a+b)+c = a+(b+c), mod 12.</span></div><div class="fact"><b>Identity</b><span>0, because a+0 = a.</span></div><div class="fact"><b>Inverse</b><span>Each a has 12−a (mod 12) as its inverse.</span></div><div class="fact"><b>Commutative</b><span>a+b = b+a, mod 12.</span></div><div class="fact"><b>Finite</b><span>The set contains exactly 12 elements.</span></div></div></section>
 <section class="panel"><h2>Clock example</h2><p class="hint">A 12-hour clock wraps around after 12.</p><div class="clock"><div class="clockface"><strong>9 → 4</strong></div></div><div class="math"><p><b>Question:</b> It is 9:00 now. What time will it be after 7 hours?</p><p><b>Group operation:</b> 9 + 7 (mod 12)</p></div><ol class="steps"><li>Current hour = 9 and added hours = 7.</li><li>Add them: 9 + 7 = 16.</li><li>Take modulo 12: 16 mod 12 = 4.</li><li>On the clock, after passing 12, the time returns to 1 and continues to 4.</li></ol><div class="answer">Final answer: It will be 4:00.</div></section></div>
+
+<section class="panel" id="practical-testing">
+<h2>Practical Testing</h2>
+<p class="hint">Try your own clock values and test the group properties using Z₁₂.</p>
+<div class="grid">
+<div>
+<label for="startHour" style="display:block;font-size:12px;font-weight:700;margin:8px 0 5px">Starting hour (1–12)</label>
+<input id="startHour" type="number" min="1" max="12" value="9" style="width:100%;padding:11px;border:1px solid #d9e2ee;border-radius:8px;font:inherit">
+<label for="addHours" style="display:block;font-size:12px;font-weight:700;margin:12px 0 5px">Hours to add</label>
+<input id="addHours" type="number" min="0" max="1000" value="7" style="width:100%;padding:11px;border:1px solid #d9e2ee;border-radius:8px;font:inherit">
+<button id="calculateClock" type="button" style="margin-top:12px;background:#2563eb;color:white;border:0;border-radius:8px;padding:11px 16px;font-weight:700;cursor:pointer">Calculate clock time</button>
+<div id="clockResult" class="math" aria-live="polite"><b>Result:</b> 9 + 7 = 16; 16 mod 12 = 4. Final time: 4:00.</div>
+</div>
+<div>
+<div class="fact"><b>Group property test</b><span>Press the button to test closure, identity, inverses and commutativity for all elements of Z₁₂.</span></div>
+<button id="testGroup" type="button" style="margin-top:12px;background:#0f766e;color:white;border:0;border-radius:8px;padding:11px 16px;font-weight:700;cursor:pointer">Run group property tests</button>
+<div id="testResult" class="math" aria-live="polite">Tests have not been run yet.</div>
+</div>
+</div>
+</section>
 <section class="panel"><h2>Why is this a Finite Abelian Group?</h2><p class="hint">The clock model satisfies the group properties: closure, associativity, identity and inverse. It is Abelian because the operation is commutative, and finite because it has only 12 elements.</p><div class="math"><p><b>Commutative property check:</b></p><p>(9 + 7) mod 12 = 4</p><p>(7 + 9) mod 12 = 4</p><p>Both give the same result, so 9 + 7 = 7 + 9 (mod 12).</p></div></section>
-<div class="foot">ParcelFlow · Finite Abelian Group learning dashboard · Clock arithmetic simulation</div></div></main></div></body></html>
+<div class="foot">ParcelFlow · Finite Abelian Group learning dashboard · Clock arithmetic simulation</div></div></main></div>
+<script>
+(function(){
+const start=document.getElementById('startHour');
+const add=document.getElementById('addHours');
+const output=document.getElementById('clockResult');
+document.getElementById('calculateClock').addEventListener('click',function(){
+ const h=Number(start.value), n=Number(add.value);
+ if(!Number.isInteger(h)||h<1||h>12||!Number.isInteger(n)||n<0||n>1000){
+  output.textContent='Please enter a starting hour from 1 to 12 and a whole number of hours from 0 to 1000.';return;
+ }
+ const base=h%12, raw=base+n, result=raw%12, shown=result===0?12:result;
+ output.innerHTML='<b>Calculation:</b> '+base+' + '+n+' = '+raw+'; '+raw+' mod 12 = '+result+'.<br><b>Final time: '+shown+':00.</b>';
+});
+document.getElementById('testGroup').addEventListener('click',function(){
+ const z=Array.from({length:12},(_,i)=>i);
+ const closure=z.every(a=>z.every(b=>z.includes((a+b)%12)));
+ const identity=z.every(a=>(a+0)%12===a);
+ const inverses=z.every(a=>z.some(b=>(a+b)%12===0));
+ const commutative=z.every(a=>z.every(b=>(a+b)%12===(b+a)%12));
+ const passed=[closure,identity,inverses,commutative].every(Boolean);
+ document.getElementById('testResult').innerHTML='<b>'+(passed?'All tests passed':'A test failed')+'</b><p>Closure: '+(closure?'PASS':'FAIL')+'</p><p>Identity (0): '+(identity?'PASS':'FAIL')+'</p><p>Inverse: '+(inverses?'PASS':'FAIL')+'</p><p>Commutativity: '+(commutative?'PASS':'FAIL')+'</p><b>Result: Z₁₂ passes all tested properties.</b>';
+});
+})();
+</script>
+</body></html>
