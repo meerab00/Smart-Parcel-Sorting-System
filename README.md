@@ -4,7 +4,7 @@ A browser-based educational digital artifact that demonstrates how abstract alge
 
 ## Live demo
 - [Main ParcelFlow dashboard](https://meerab00.github.io/Smart-Parcel-Sorting-System/)
-- [Interactive D4 Symmetry Lab](https://meerab00.github.io/Smart-Parcel-Sorting-System/d4-lab.html)
+- [Z4 Orientation Optimizer](https://meerab00.github.io/Smart-Parcel-Sorting-System/z4-lab.html)\n- [D4 Symmetry Checker](https://meerab00.github.io/Smart-Parcel-Sorting-System/d4-lab.html)\n- [Sn Parcel Sequence Optimizer](https://meerab00.github.io/Smart-Parcel-Sorting-System/sn-lab.html)
 
 ## Problem
 Parcel-handling workflows need parcels to face a required orientation and be grouped into destination sequences. This prototype simulates those decisions and reports the operations involved.
