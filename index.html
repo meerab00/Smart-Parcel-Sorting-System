@@ -19,38 +19,20 @@
 
 <section class="panel"><h2>Orientation calculator</h2><p class="hint">Find the minimum quarter-turns needed to reach the required direction.</p><div class="formgrid"><div class="field"><label>From (degrees)</label><select id="from"><option value="0">0°</option><option value="1">90°</option><option value="2">180°</option><option value="3">270°</option></select></div><div class="field"><label>To (degrees)</label><select id="to"><option value="0">0°</option><option value="1">90°</option><option value="2">180°</option><option value="3">270°</option></select></div></div><div class="actions"><button class="btn secondary" onclick="calculate()">Calculate rotation</button></div><div id="calc" class="result"><strong>ℤ₄ calculation</strong><p>Select directions and calculate.</p></div></section>
 <section class="panel"><h2>How the model works</h2><p class="hint"><b>1. ℤ₄:</b> orientation is represented by a number 0–3. The required turn is (target − current) mod 4.</p><p class="hint"><b>2. D₄:</b> each parcel can be rotated or reflected. A flip is counted as a reflection operation.</p><p class="hint"><b>3. Sₙ:</b> sorting creates a permutation of parcel positions, grouping parcels by destination.</p><p class="hint">This is a software simulation of sorting logic, not a physical conveyor or industrial scanner.</p></section></div></div>
-<section class="panel topic-section" id="finite-abelian"><h2>Finite Abelian Group · Clock Arithmetic (Z₁₂)</h2><p class="hint">Solved example: It is 9:00 now. What time will it be after 7 hours?</p><div class="result"><strong>Solution</strong><p>(9 + 7) mod 12 = 16 mod 12 = 4. Final time: 4:00.</p></div><p class="hint">Try your own values, or write and run your own Python solution.</p><div class="formgrid"><div class="field"><label>Starting hour (1–12)</label><input id="zStart" type="number" min="1" max="12" value="9"></div><div class="field"><label>Hours to add</label><input id="zAdd" type="number" min="0" value="7"></div></div><div class="actions"><button class="btn secondary" onclick="testClock()">Calculate clock time</button></div><div class="result" id="zResult">Result will appear here.</div><div class="field"><label>Python code editor · Finite Abelian Group</label><textarea id="py-z" spellcheck="false" style="width:100%;min-height:150px;padding:12px;border:1px solid #dce4ee;border-radius:8px;font:13px/1.5 ui-monospace,monospace">hour = 9
-hours_to_add = 7
+<section class="panel topic-section" id="finite-abelian"><h2>Finite Abelian Group · Clock Arithmetic (Z₁₂)</h2><p class="hint">Solved example: It is 9:00 now. What time will it be after 7 hours?</p><div class="result"><strong>Solution</strong><p>(9 + 7) mod 12 = 16 mod 12 = 4. Final time: 4:00.</p></div><p class="hint">Change only the values. The Python algorithm is already written. Values are saved in this browser when you save or run.</p><div class="formgrid"><div class="field"><label>Starting hour (1–12)</label><input id="zStart" type="number" min="1" max="12" value="9"></div><div class="field"><label>Hours to add</label><input id="zAdd" type="number" min="0" value="7"></div></div><div class="actions"><button class="btn secondary" onclick="saveTopicValues('z')">Save values</button><button class="btn primary" onclick="runTopic('z')">Run algorithm</button></div><pre class="result" id="out-z" style="white-space:pre-wrap">Change the values and press Run algorithm.</pre><details><summary>View ready-made Python algorithm</summary><pre class="result">hour = starting_hour
+hours_to_add = added_hours
 answer = (hour + hours_to_add) % 12
-print(f"({hour} + {hours_to_add}) mod 12 = {answer}")
-print("Clock time:", answer if answer != 0 else 12)</textarea></div><button class="btn primary" onclick="runPython('z')">Run Python code</button><pre class="result" id="out-z" style="white-space:pre-wrap">Python output will appear here.</pre></section>
+print("Clock time:", answer if answer else 12)</pre></details></section>
 
-<section class="panel topic-section" id="permutation"><h2>Permutation Group (Sₙ) · Parcel Arrangement</h2><p class="hint">Solved example: arrange parcels by destination priority: Islamabad → Karachi → Lahore → Multan.</p><div class="result"><strong>Initial order</strong><p>P1 Lahore, P2 Multan, P3 Karachi, P4 Lahore, P5 Islamabad, P6 Multan</p><strong>Final order</strong><p>P5, P3, P1, P4, P2, P6</p><strong>Permutation</strong><p>π = (5, 3, 1, 4, 2, 6)</p><strong>Inversions</strong><p>(5,3), (5,1), (5,4), (5,2), (3,1), (3,2), (4,2) = 7. Minimum adjacent swaps = 7.</p></div><div class="field"><label>Python code editor · Permutation Group</label><textarea id="py-p" spellcheck="false" style="width:100%;min-height:180px;padding:12px;border:1px solid #dce4ee;border-radius:8px;font:13px/1.5 ui-monospace,monospace"># Original positions in the required dispatch order
-permutation = [5, 3, 1, 4, 2, 6]
-inversions = [(permutation[i], permutation[j])
-              for i in range(len(permutation))
-              for j in range(i + 1, len(permutation))
-              if permutation[i] > permutation[j]]
-print("Permutation:", permutation)
+<section class="panel topic-section" id="permutation"><h2>Permutation Group (Sₙ) · Parcel Arrangement</h2><p class="hint">Solved example: arrange parcels by destination priority: Islamabad → Karachi → Lahore → Multan.</p><div class="result"><strong>Initial order</strong><p>P1 Lahore, P2 Multan, P3 Karachi, P4 Lahore, P5 Islamabad, P6 Multan</p><strong>Final order</strong><p>P5, P3, P1, P4, P2, P6</p><strong>Permutation</strong><p>π = (5, 3, 1, 4, 2, 6)</p><strong>Inversions</strong><p>(5,3), (5,1), (5,4), (5,2), (3,1), (3,2), (4,2) = 7. Minimum adjacent swaps = 7.</p></div><p class="hint">Enter a permutation of 1 to n. The inversion-count algorithm is already written. Save and run as often as you like.</p><div class="field"><label>Permutation (comma-separated)</label><input id="pValues" value="5, 3, 1, 4, 2, 6"></div><div class="actions"><button class="btn secondary" onclick="saveTopicValues('p')">Save values</button><button class="btn primary" onclick="runTopic('p')">Run algorithm</button></div><pre class="result" id="out-p" style="white-space:pre-wrap">Change the permutation and press Run algorithm.</pre><details><summary>View ready-made Python algorithm</summary><pre class="result">inversions = [(a, b) for i, a in enumerate(permutation) for b in permutation[i+1:] if a > b]
 print("Inversion pairs:", inversions)
-print("Minimum adjacent swaps:", len(inversions))</textarea></div><button class="btn primary" onclick="runPython('p')">Run Python code</button><pre class="result" id="out-p" style="white-space:pre-wrap">Python output will appear here.</pre></section>
+print("Minimum adjacent swaps:", len(inversions))</pre></details></section>
 
-<section class="panel topic-section" id="dihedral"><h2>Dihedral Group (D₄) · Rubik's Cube Face Symmetry</h2><p class="hint">Solved example: the square face has four rotations and four reflections, giving eight symmetries.</p><div class="result"><strong>Group elements</strong><p>Rotations: e, r, r², r³ (0°, 90°, 180°, 270°).</p><p>Reflections: s, rs, r²s, r³s.</p><strong>Worked rules</strong><p>Four quarter-turns: r⁴ = e. Two reflections: s² = e.</p><p>Using the D₄ multiplication rule, sr = r⁻¹s. So rotation and reflection do not commute in general.</p></div><div class="field"><label>Python code editor · Dihedral Group</label><textarea id="py-d" spellcheck="false" style="width:100%;min-height:210px;padding:12px;border:1px solid #dce4ee;border-radius:8px;font:13px/1.5 ui-monospace,monospace"># Represent r^k s^f as (k, f), where f=0 is rotation
-# and f=1 includes a reflection.
-def multiply(a, b):
+<section class="panel topic-section" id="dihedral"><h2>Dihedral Group (D₄) · Rubik's Cube Face Symmetry</h2><p class="hint">Solved example: the square face has four rotations and four reflections, giving eight symmetries.</p><div class="result"><strong>Group elements</strong><p>Rotations: e, r, r², r³ (0°, 90°, 180°, 270°).</p><p>Reflections: s, rs, r²s, r³s.</p><strong>Worked rules</strong><p>Four quarter-turns: r⁴ = e. Two reflections: s² = e.</p><p>Using the D₄ multiplication rule, sr = r⁻¹s. So rotation and reflection do not commute in general.</p></div><p class="hint">Choose two D₄ elements rᵏsᶠ. k is quarter-turns (0–3); f is 0 for rotation or 1 for reflection. The group operation is already coded.</p><div class="formgrid"><div class="field"><label>First element · k₁ (0–3)</label><input id="dK1" type="number" min="0" max="3" value="1"></div><div class="field"><label>First element · f₁</label><select id="dF1"><option value="0">0 — Rotation</option><option value="1">1 — Reflection</option></select></div><div class="field"><label>Second element · k₂ (0–3)</label><input id="dK2" type="number" min="0" max="3" value="0"></div><div class="field"><label>Second element · f₂</label><select id="dF2"><option value="0">0 — Rotation</option><option value="1">1 — Reflection</option></select></div></div><div class="actions"><button class="btn secondary" onclick="saveTopicValues('d')">Save values</button><button class="btn primary" onclick="runTopic('d')">Run algorithm</button></div><pre class="result" id="out-d" style="white-space:pre-wrap">Change the values and press Run algorithm.</pre><details><summary>View ready-made Python algorithm</summary><pre class="result">def multiply(a, b):
     k1, f1 = a
     k2, f2 = b
     return ((k1 + (-1)**f1 * k2) % 4, (f1 + f2) % 2)
-
-elements = [(k, f) for f in (0, 1) for k in range(4)]
-e = (0, 0)
-r = (1, 0)
-s = (0, 1)
-print("Eight D4 elements:", elements)
-print("r^4 = e:", multiply(multiply(multiply(r, r), r), r) == e)
-print("s^2 = e:", multiply(s, s) == e)
-print("sr = r^-1 s:", multiply(s, r) == multiply((3, 0), s))
-print("Do r and s commute?", multiply(r, s) == multiply(s, r))</textarea></div><button class="btn primary" onclick="runPython('d')">Run Python code</button><pre class="result" id="out-d" style="white-space:pre-wrap">Python output will appear here.</pre></section>
+print("Product:", multiply(first_element, second_element))</pre></details></section>
 
 <div class="footer">ParcelFlow · Educational mathematical simulation · All calculations run in your browser</div></div></main></div>
 <script>
@@ -70,26 +52,53 @@ function countSwaps(a){let n=0;for(let i=0;i<a.length;i++)for(let j=i+1;j<a.leng
 function calculate(){const a=+document.getElementById('from').value,b=+document.getElementById('to').value,d=turns(a,b),signed=d>2?d-4:d;document.getElementById('calc').innerHTML='<strong>ℤ₄: ('+b+' − '+a+' + 4) mod 4 = '+d+'</strong><p>Required rotation: '+(signed===0?'No rotation':Math.abs(signed)+' quarter-turn(s) '+(signed>0?'clockwise':'counter-clockwise'))+'. Total angle: '+(signed*90)+'° (mod 360°).</p>'}
 
 let pyodidePromise;
-async function runPython(id){
- const output=document.getElementById('out-'+id), code=document.getElementById('py-'+id).value;
- output.textContent='Loading Python...';
+async function getPython(){
+ if(!pyodidePromise){
+  pyodidePromise=(async()=>{
+   const script=document.createElement('script');
+   script.src='https://cdn.jsdelivr.net/pyodide/v0.27.7/full/pyodide.js';
+   document.head.appendChild(script);
+   await new Promise((resolve,reject)=>{script.onload=resolve;script.onerror=()=>reject(new Error('Python needs an internet connection on first load.'));});
+   return await loadPyodide();
+  })();
+ }
+ return await pyodidePromise;
+}
+const topicFields={z:['zStart','zAdd'],p:['pValues'],d:['dK1','dF1','dK2','dF2']};
+function saveTopicValues(id){
+ const values=topicFields[id].map(key=>document.getElementById(key).value);
+ try{localStorage.setItem('parcelflow-values-'+id,JSON.stringify(values));}
+ catch(e){document.getElementById('out-'+id).textContent='Could not save values in this browser.';return;}
+ document.getElementById('out-'+id).textContent='Values saved in this browser.';
+}
+function restoreTopicValues(){
+ for(const id of Object.keys(topicFields)){
+  try{const v=JSON.parse(localStorage.getItem('parcelflow-values-'+id)||'null');if(v&&v.length===topicFields[id].length)topicFields[id].forEach((key,i)=>document.getElementById(key).value=v[i]);}catch(e){}
+ }
+}
+async function runTopic(id){
+ const output=document.getElementById('out-'+id), val=id=>document.getElementById(id).value.trim();
  try{
-  if(!pyodidePromise){
-   pyodidePromise=(async()=>{
-    const script=document.createElement('script');
-    script.src='https://cdn.jsdelivr.net/pyodide/v0.27.7/full/pyodide.js';
-    document.head.appendChild(script);
-    await new Promise((resolve,reject)=>{script.onload=resolve;script.onerror=()=>reject(new Error('Python could not load. Check your internet connection and try again.'));});
-    return await loadPyodide();
-   })();
+  saveTopicValues(id);
+  let code='';
+  if(id==='z'){
+   const h=Number(val('zStart')), n=Number(val('zAdd'));
+   if(!Number.isInteger(h)||h<1||h>12||!Number.isInteger(n)||n<0)throw new Error('Starting hour must be 1–12 and added hours must be a non-negative whole number.');
+   code='hour = '+h+'\nhours_to_add = '+n+'\nanswer = (hour + hours_to_add) % 12\nprint("('+h+' + '+n+') mod 12 =", answer)\nprint("Clock time:", answer if answer else 12)';
+  }else if(id==='p'){
+   const a=val('pValues').split(',').map(x=>Number(x.trim()));
+   if(!a.length||a.some(x=>!Number.isInteger(x))||new Set(a).size!==a.length||a.some(x=>x<1||x>a.length))throw new Error('Enter every number from 1 to n exactly once, separated by commas.');
+   code='permutation = '+JSON.stringify(a)+'\ninversions = [(a, b) for i, a in enumerate(permutation) for b in permutation[i+1:] if a > b]\nprint("Permutation:", permutation)\nprint("Inversion pairs:", inversions)\nprint("Minimum adjacent swaps:", len(inversions))';
+  }else{
+   const k1=Number(val('dK1')),f1=Number(val('dF1')),k2=Number(val('dK2')),f2=Number(val('dF2'));
+   if(!Number.isInteger(k1)||k1<0||k1>3||![0,1].includes(f1)||!Number.isInteger(k2)||k2<0||k2>3||![0,1].includes(f2))throw new Error('k values must be 0–3 and f values must be 0 or 1.');
+   code='def multiply(a, b):\n    k1, f1 = a\n    k2, f2 = b\n    return ((k1 + (-1)**f1 * k2) % 4, (f1 + f2) % 2)\nfirst_element = ('+k1+', '+f1+')\nsecond_element = ('+k2+', '+f2+')\nprint("First element:", first_element)\nprint("Second element:", second_element)\nprint("Product:", multiply(first_element, second_element))';
   }
-  const py=await pyodidePromise;
-  let captured='';
-  py.setStdout({batched:s=>{captured+=s+'\n';}});
-  py.setStderr({batched:s=>{captured+=s+'\n';}});
-  await py.runPythonAsync(code);
-  output.textContent=captured.trimEnd()||'Code ran successfully (no printed output).';
- }catch(e){output.textContent='Python error: '+e.message;}
+  output.textContent='Running Python algorithm...';
+  const py=await getPython();let captured='';
+  py.setStdout({batched:x=>captured+=x+'\n'});py.setStderr({batched:x=>captured+=x+'\n'});
+  await py.runPythonAsync(code);output.textContent=captured.trimEnd()||'Algorithm completed.';
+ }catch(e){output.textContent='Please check your values: '+e.message;}
 }
 function testClock(){
  const h=Number(document.getElementById('zStart').value), n=Number(document.getElementById('zAdd').value);
@@ -98,6 +107,7 @@ function testClock(){
  document.getElementById('zResult').textContent='('+h+' + '+n+') mod 12 = '+answer+'; Final time: '+(answer===0?12:answer)+':00.';
 }
 
+restoreTopicValues();
 render();
 function openWorkspace(id,label){
  document.querySelectorAll('.topic-section').forEach(section=>section.style.display='none');
