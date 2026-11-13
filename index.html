@@ -85,8 +85,8 @@ async function runPython(id){
   }
   const py=await pyodidePromise;
   let captured='';
-  py.setStdout({batched:s=>{captured+=s+'\\n';}});
-  py.setStderr({batched:s=>{captured+=s+'\\n';}});
+  py.setStdout({batched:s=>{captured+=s+'\n';}});
+  py.setStderr({batched:s=>{captured+=s+'\n';}});
   await py.runPythonAsync(code);
   output.textContent=captured.trimEnd()||'Code ran successfully (no printed output).';
  }catch(e){output.textContent='Python error: '+e.message;}
