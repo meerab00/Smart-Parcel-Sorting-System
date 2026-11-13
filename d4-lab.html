@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ParcelFlow | D4 Symmetry Lab</title>
+<style>
+*{box-sizing:border-box}body{margin:0;font:15px/1.55 system-ui,Arial;background:#f3f6fb;color:#172b43}.wrap{max-width:900px;margin:36px auto;padding:20px}.card{background:white;border:1px solid #e3eaf3;border-radius:16px;padding:24px;margin:16px 0;box-shadow:0 4px 16px #10243a0a}h1{margin:4px 0 8px}.muted{color:#718096}.row{display:flex;gap:24px;align-items:center;flex-wrap:wrap}.shape{width:190px;height:190px;border:2px dashed #b9c8dc;border-radius:14px;display:grid;place-items:center;background:#f8fbff}.parcel{width:112px;height:112px;background:#dbeafe;border:3px solid #2563eb;border-radius:12px;display:grid;place-items:center;font-size:36px;font-weight:800;color:#1d4ed8;transition:transform .25s}.controls{display:flex;gap:9px;flex-wrap:wrap;margin-top:16px}.btn{border:0;border-radius:8px;padding:10px 14px;background:#2563eb;color:white;font-weight:700;cursor:pointer}.btn.alt{background:#eaf0f8;color:#28435f}.result{background:#f2f7ff;border:1px solid #dce8ff;padding:14px;border-radius:10px;margin-top:14px}.formula{font-family:ui-monospace,monospace;background:#f6f8fb;padding:12px;border-radius:8px;overflow-wrap:anywhere}.grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}@media(max-width:650px){.grid{grid-template-columns:1fr}.wrap{margin:10px auto;padding:12px}.card{padding:17px}}
+</style></head>
+<body><main class="wrap">
+<a href="./" style="color:#2563eb">← Back to ParcelFlow dashboard</a>
+<div class="card"><div class="muted">MATHEMATICAL MODEL · DIHEDRAL GROUP</div><h1>D₄ Symmetry Lab</h1><p class="muted">Explore the eight symmetries of a square parcel face: four rotations and four reflections. This is a visual mathematical simulation.</p></div>
+<div class="card"><div class="row"><div class="shape"><div class="parcel" id="parcel">↑</div></div><div style="flex:1;min-width:220px"><h2 id="operation">Identity (e)</h2><p id="description" class="muted">No change: the parcel face keeps its original orientation.</p><div class="result"><b>Current symmetry</b><div id="state">Rotation 0°</div></div></div></div>
+<div class="controls"><button class="btn" onclick="rotate(90)">Rotate +90°</button><button class="btn" onclick="rotate(-90)">Rotate −90°</button><button class="btn alt" onclick="reflect()">Reflect (flip)</button><button class="btn alt" onclick="reset()">Reset</button></div></div>
+<div class="grid"><div class="card"><h2>Eight elements of D₄</h2><p>Rotations: e, r, r², r³ (0°, 90°, 180°, 270°).</p><p>Reflections: s, sr, sr², sr³ (four mirror symmetries).</p><p class="muted">The group has 8 elements and is non-abelian: the order of a rotation and reflection can change the result.</p></div><div class="card"><h2>Transformation record</h2><p id="record">No transformations yet.</p><div class="formula">r⁴ = e; s² = e; sr = r⁻¹s</div><p class="muted">A reflection performed twice returns the parcel to its original mirror state.</p></div></div>
+<div class="card"><h2>Why this matters</h2><p>A square-faced parcel can be modeled by D₄ when both turning and flipping are allowed. The main ParcelFlow batch currently calculates quarter-turn orientation with ℤ₄; this page is a separate interactive D₄ demonstration and does not claim to control a physical parcel.</p></div>
+</main>
+<script>
+let angle=0,flipped=false,history=[];
+function draw(){document.getElementById('parcel').style.transform='rotate('+angle+'deg) scaleX('+(flipped?-1:1)+')';document.getElementById('state').textContent='Rotation '+((angle%360+360)%360)+'° · '+(flipped?'Reflected':'Not reflected');document.getElementById('operation').textContent=flipped?'Reflection with rotation':'Rotation '+((angle%360+360)%360)+'°';document.getElementById('description').textContent=flipped?'A mirror reflection has been applied to the square face.':'The parcel face is rotated without reflection.';document.getElementById('record').textContent=history.length?history.join(' → '):'No transformations yet.'}
+function rotate(n){angle=(angle+n+360)%360;history.push((n>0?'+':'')+n+'° rotation');draw()}
+function reflect(){flipped=!flipped;history.push(flipped?'reflection applied':'reflection undone');draw()}
+function reset(){angle=0;flipped=false;history=[];draw()}
+draw();
+</script></body></html>
